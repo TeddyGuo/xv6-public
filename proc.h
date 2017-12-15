@@ -1,3 +1,7 @@
+// Segments in proc->gdt
+#define NSEGS 7
+#include "defs.h" // TeddyGuo
+
 // Per-CPU state
 struct cpu {
   uchar apicid;                // Local APIC ID
@@ -49,6 +53,7 @@ struct proc {
   struct file *ofile[NOFILE];  // Open files
   struct inode *cwd;           // Current directory
   char name[16];               // Process name (debugging)
+  sighandler_t sighandlers[5]; // TeddyGuo
 };
 
 // Process memory is laid out contiguously, low addresses first:

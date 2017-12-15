@@ -6,6 +6,7 @@
 #include "x86.h"
 #include "proc.h"
 #include "spinlock.h"
+#include "signal.h" //TeddyGuo
 
 struct {
   struct spinlock lock;
@@ -106,6 +107,12 @@ found:
   // which returns to trapret.
   sp -= 4;
   *(uint*)sp = (uint)trapret;
+
+  p->sighandlers[0] = (void*) - 1; //TeddyGuo
+  p->sighandlers[1] = (void*) - 1; //TeddyGuo
+  p->sighandlers[2] = (void*) - 1; //TeddyGuo
+  p->sighandlers[3] = (void*) - 1; //TeddyGuo
+  p->sighandlers[4] = (void*) - 1; //TeddyGuo
 
   sp -= sizeof *p->context;
   p->context = (struct context*)sp;
@@ -495,6 +502,18 @@ kill(int pid)
   release(&ptable.lock);
   return -1;
 }
+
+int
+signal(int signum, sighadler_t handler)
+{
+  if (proc->sighandlers[signum + 1] == (void* - 1)){
+    proc->sighandlers[signum + 1] = handler;
+    return 1;
+  }
+  else{
+    return 0;
+  }
+} //TeddyGuo
 
 //PAGEBREAK: 36
 // Print a process listing to console.  For debugging.

@@ -7,6 +7,7 @@
 #include "x86.h"
 #include "traps.h"
 #include "spinlock.h"
+#include "signal.h" // TeddyGuo
 
 // Interrupt descriptor table (shared by all CPUs).
 struct gatedesc idt[256];
@@ -80,18 +81,53 @@ trap(struct trapframe *tf)
 
   //PAGEBREAK: 13
   default:
-    if(myproc() == 0 || (tf->cs&3) == 0){
+    // TeddyGuo
+    if (tf -> trapno == T_DIVIDE && proc -> sighandlers[SIGFPE + 1] != (void * ) - 1) 
+    {
+      int *arg;
+      int *ret;
+
+      tf -> esp = tf -> esp - 4;
+      ret = (int *) tf -> esp;
+      *ret = tf -> eip;
+
+      tf -> esp = tf -> esp - 4;
+      ret = (int *) tf -> esp;
+      *ret = tf -> eax;
+
+      tf -> esp = tf -> esp - 4;
+      ret = (int *) tf -> esp;
+      *ret = tf -> ecx;
+
+      tf -> esp = tf -> esp - 4;
+      ret = (int *) tf -> esp;
+      *ret = tf -> edx;
+
+      tf -> esp = tf -> esp - 4;
+      arg = (int *) tf -> esp;
+      *arg = 0;
+
+      tf -> esp = tf -> esp - 4;
+      ret = (int *) tf -> esp;
+      *ret = (int) proc -> sighandlers[0];
+
+      tf -> eip = (int) proc -> sighandlers[SIGFPE + 1];
+    } // block end
+    else
+    {
+      if(myproc() == 0 || (tf->cs&3) == 0){
       // In kernel, it must be our mistake.
-      cprintf("unexpected trap %d from cpu %d eip %x (cr2=0x%x)\n",
-              tf->trapno, cpuid(), tf->eip, rcr2());
-      panic("trap");
+        cprintf("unexpected trap %d from cpu %d eip %x (cr2=0x%x)\n",
+                tf->trapno, cpuid(), tf->eip, rcr2());
+        panic("trap");
+      }
+      // In user space, assume process misbehaved.
+      cprintf("pid %d %s: trap %d err %d on cpu %d "
+              "eip 0x%x addr 0x%x--kill proc\n",
+              myproc()->pid, myproc()->name, tf->trapno,
+              tf->err, cpuid(), tf->eip, rcr2());
+      myproc()->killed = 1;
     }
-    // In user space, assume process misbehaved.
-    cprintf("pid %d %s: trap %d err %d on cpu %d "
-            "eip 0x%x addr 0x%x--kill proc\n",
-            myproc()->pid, myproc()->name, tf->trapno,
-            tf->err, cpuid(), tf->eip, rcr2());
-    myproc()->killed = 1;
   }
 
   // Force process exit if it has been killed and is in user space.
