@@ -1,6 +1,8 @@
 struct stat;
 struct rtcdate;
 
+typedef void (*sighandler_t)(int); // TeddyGuo
+
 // system calls
 int fork(void);
 int exit(void) __attribute__((noreturn));
@@ -23,6 +25,8 @@ int getpid(void);
 char* sbrk(int);
 int sleep(int);
 int uptime(void);
+int halt(void); // TeddyGuo
+int signal(int, sighandler_t); // TeddyGuo
 
 // ulib.c
 int stat(char*, struct stat*);
