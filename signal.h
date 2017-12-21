@@ -1,6 +1,10 @@
 #ifndef __XV6_SIGNAL
 #define __XV6_SIGNAL
 
+#define _sigfpe_firstest
+#define _sigfpe_timing
+#define _sigfpe_secondtest
+
 #define SIGHUP 0
 #define SIGINT 1
 #define SIGFPE 2
