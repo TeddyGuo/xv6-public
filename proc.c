@@ -505,7 +505,7 @@ kill(int pid)
 }
 
 int
-signal(int signum, sighadler_t handler)
+signal(int signum, sighandler_t handler)
 {
   if (proc->sighandlers[signum + 1] == (void*) - 1)
   {
