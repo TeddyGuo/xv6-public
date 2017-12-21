@@ -177,7 +177,6 @@ UPROGS=\
 	_sigfpe_firstest\
 	_sigfpe_timing\
 	_sigfpe_secondtest\
-	# TeddyGuo
 
 fs.img: mkfs README $(UPROGS)
 	./mkfs fs.img README $(UPROGS)
