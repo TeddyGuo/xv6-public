@@ -9,6 +9,6 @@
 
 typedef void (*sighadler_t)(int);
 
-int signal(int signum, sighadler_t handler);
+signal(int signum, sighadler_t handler);
 
 #endif
