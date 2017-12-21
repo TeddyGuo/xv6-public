@@ -506,10 +506,8 @@ kill(int pid)
 int
 signal(int signum, sighadler_t handler)
 {
-  struct proc *p;
-
-  if (p->sighandlers[signum + 1] == (void*) - 1){
-    p->sighandlers[signum + 1] = handler;
+  if (proc->sighandlers[signum + 1] == (void*) - 1){
+    proc->sighandlers[signum + 1] = handler;
     return 1;
   }
   else{
