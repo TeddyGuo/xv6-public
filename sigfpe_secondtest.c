@@ -10,17 +10,6 @@ void signal_handler(int signum)
     __asm__("addl $0x8, $0x18(%ebp)");
 }
 
-void restorer(void)
-{
-    __asm__("pop %ebp");
-    __asm__("pop %edx");
-    __asm__("pop %edx");
-    __asm__("pop %ecx");
-    __asm__("pop %eax");
-    __asm__("ret");
-
-}
-
 int main(void)
 {
     register int ecx asm ("%ecx");
