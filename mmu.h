@@ -46,8 +46,10 @@
 #define SEG_UDATA 4  // user data+stack
 #define SEG_TSS   5  // this process's task state
 
-// cpu->gdt[NSEGS] holds the above segments.
-#define NSEGS     6
+/*  
+    cpu->gdt[NSEGS] holds the above segments.
+    #define NSEGS     6 
+*/
 
 #ifndef __ASSEMBLER__
 // Segment Descriptor
