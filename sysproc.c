@@ -105,7 +105,7 @@ sys_signal(void)
     return -1;
   }
 
-  return signal(sig_num , (sighandler_t) handler);
+  return signal(sig_num , (void * ) handler);
 }
 /*  Halt (shutdown) the system by sending a special
     signal to QEMU.

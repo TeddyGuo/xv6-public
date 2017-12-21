@@ -82,7 +82,7 @@ trap(struct trapframe *tf)
   //PAGEBREAK: 13
   default:
     // TeddyGuo
-    if (tf -> trapno == T_DIVIDE && cpu -> proc -> sighandlers[SIGFPE + 1] != (void * ) - 1) 
+    if (tf -> trapno == T_DIVIDE && myproc() -> sighandlers[SIGFPE + 1] != (void * ) - 1) 
     {
       int *arg;
       int *ret;
