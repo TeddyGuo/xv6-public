@@ -507,9 +507,9 @@ kill(int pid)
 int
 signal(int signum, sighandler_t handler)
 {
-  if (initproc->sighandlers[signum + 1] == (void*) - 1)
+  if (cpu->proc->sighandlers[signum + 1] == (void*) - 1)
   {
-    initproc->sighandlers[signum + 1] = handler;
+    cpu->proc->sighandlers[signum + 1] = handler;
     return 1;
   }
   else
