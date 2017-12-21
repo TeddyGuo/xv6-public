@@ -174,9 +174,9 @@ UPROGS=\
 	_usertests\
 	_wc\
 	_zombie\
-	sigfpe_test1\
-	sigfpe_timing\
-	sigfpe_test2\
+	_sigfpe_firstest\
+	_sigfpe_timing\
+	_sigfpe_secondtest\
 	# TeddyGuo
 
 fs.img: mkfs README $(UPROGS)
