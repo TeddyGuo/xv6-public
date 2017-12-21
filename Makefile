@@ -176,7 +176,7 @@ UPROGS=\
 	_zombie\
 	_sigfpe_firstest\
 	_sigfpe_timing\
-	_sigfpe_secondtest
+	_sigfpe_secondtest\
 
 fs.img: mkfs README $(UPROGS)
 	./mkfs fs.img README $(UPROGS)
