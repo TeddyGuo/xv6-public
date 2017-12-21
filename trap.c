@@ -109,7 +109,7 @@ trap(struct trapframe *tf)
 
       tf -> esp = tf -> esp - 4;
       ret = (int *) tf -> esp;
-      *ret = (int) proc -> sighandlers[0];
+      *ret = (int) myproc() -> sighandlers[0];
 
       tf -> eip = (int) proc -> sighandlers[SIGFPE + 1];
     } // block end
