@@ -6,6 +6,7 @@
 #include "memlayout.h"
 #include "mmu.h"
 #include "proc.h"
+#include "signal.h"
 
 int
 sys_fork(void)
@@ -104,7 +105,7 @@ sys_signal(void)
     return -1;
   }
 
-  return signal(sig_num , (sighadler_t) handler);
+  return signal(sig_num , (sighandler_t) handler);
 }
 /*  Halt (shutdown) the system by sending a special
     signal to QEMU.
