@@ -6,7 +6,8 @@
 #include "x86.h"
 #include "proc.h"
 #include "spinlock.h"
-#include "signal.h" //TeddyGuo
+
+#define SIGFPE 0 //TeddyGuo
 
 struct {
   struct spinlock lock;
@@ -506,11 +507,13 @@ kill(int pid)
 int
 signal(int signum, sighadler_t handler)
 {
-  if (proc->sighandlers[signum + 1] == (void*) - 1){
+  if (proc->sighandlers[signum + 1] == (void*) - 1)
+  {
     proc->sighandlers[signum + 1] = handler;
     return 1;
   }
-  else{
+  else
+  {
     return 0;
   }
 } //TeddyGuo
