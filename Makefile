@@ -239,6 +239,16 @@ qemu-nox-gdb: fs.img xv6.img .gdbinit
 	@echo "*** Now run 'gdb'." 1>&2
 	$(QEMU) -nographic $(QEMUOPTS) -S $(QEMUGDB)
 
+# TeddyGuo
+depend: .depend
+
+.depend: $(SRCS)
+        rm -f ./.depend
+        $(CC) $(CFLAGS) -MM $^ -MF  ./.depend;
+
+include .depend
+# TeddyGuo
+
 # CUT HERE
 # prepare dist for students
 # after running make dist, probably want to
