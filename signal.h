@@ -3,8 +3,8 @@
 
 #define SIGFPE 0
 
-typedef void (*sighadler_t)(int);
+typedef void (*sighandler_t)(int);
 
-int signal(int signum, sighadler_t handler);
+int signal(int signum, sighandler_t handler);
 
 #endif
