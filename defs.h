@@ -1,3 +1,6 @@
+#ifndef _DEFS_H
+#define _DEFS_H
+
 struct buf;
 struct context;
 struct file;
@@ -122,6 +125,7 @@ void            userinit(void);
 int             wait(void);
 void            wakeup(void*);
 void            yield(void);
+int             signal(int, sighandler_t); // TeddyGuo
 
 // swtch.S
 void            swtch(struct context**, struct context*);
@@ -190,3 +194,6 @@ void            clearpteu(pde_t *pgdir, char *uva);
 
 // number of elements in fixed-size array
 #define NELEM(x) (sizeof(x)/sizeof((x)[0]))
+
+
+#endif
