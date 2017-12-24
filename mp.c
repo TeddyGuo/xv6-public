@@ -100,24 +100,28 @@ void
 mpinit(void)
 {
   uchar *p, *e;
-  int ismp;
   struct mp *mp;
   struct mpconf *conf;
   struct mpproc *proc;
   struct mpioapic *ioapic;
 
+  bcpu = &cpus[0];
   if((conf = mpconfig(&mp)) == 0)
-    panic("Expect to run on an SMP");
+    return;
   ismp = 1;
   lapic = (uint*)conf->lapicaddr;
   for(p=(uchar*)(conf+1), e=(uchar*)conf+conf->length; p<e; ){
     switch(*p){
     case MPPROC:
       proc = (struct mpproc*)p;
-      if(ncpu < NCPU) {
-        cpus[ncpu].apicid = proc->apicid;  // apicid may differ from ncpu
-        ncpu++;
+      if(ncpu != proc->apicid){
+        cprintf("mpinit: ncpu=%d apicid=%d\n", ncpu, proc->apicid);
+        ismp = 0;
       }
+      if(proc->flags & MPBOOT)
+        bcpu = &cpus[ncpu];
+      cpus[ncpu].id = ncpu;
+      ncpu++;
       p += sizeof(struct mpproc);
       continue;
     case MPIOAPIC:
@@ -131,12 +135,17 @@ mpinit(void)
       p += 8;
       continue;
     default:
+      cprintf("mpinit: unknown config type %x\n", *p);
       ismp = 0;
-      break;
     }
   }
-  if(!ismp)
-    panic("Didn't find a suitable machine");
+  if(!ismp){
+    // Didn't like what we found; fall back to no MP.
+    ncpu = 1;
+    lapic = 0;
+    ioapicid = 0;
+    return;
+  }
 
   if(mp->imcrp){
     // Bochs doesn't support IMCR, so this doesn't run on Bochs.
