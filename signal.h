@@ -1,5 +1,5 @@
-#ifndef _SIGNAL_H
-#define _SIGNAL_H
+#ifndef __SIGNAL_H
+#define __SIGNAL_H
 
 #define SIGFPE 0
 
