@@ -1,5 +1,5 @@
-#ifndef _XV_HALT
-#define _XV_HALT
+#ifndef _HALT_H
+#define _HALT_H
 
 int halt(void);
 
