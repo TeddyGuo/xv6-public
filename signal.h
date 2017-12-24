@@ -1,5 +1,5 @@
-#ifndef _XV6_SIGNAL
-#define _XV6_SIGNAL
+#ifndef _SIGNAL_H
+#define _SIGNAL_H
 
 #define SIGFPE 0
 
