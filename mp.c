@@ -120,7 +120,7 @@ mpinit(void)
       }
       if(proc->flags & MPBOOT)
         bcpu = &cpus[ncpu];
-      cpus[ncpu].id = ncpu;
+      cpus[ncpu].apicid = ncpu;
       ncpu++;
       p += sizeof(struct mpproc);
       continue;
