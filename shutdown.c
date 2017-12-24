@@ -6,6 +6,7 @@
 #include "types.h"
 #include "stat.h"
 #include "user.h"
+#include "halt.h"
 
 int main(int argc, char *argv[])
 {
