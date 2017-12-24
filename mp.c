@@ -12,8 +12,16 @@
 #include "proc.h"
 
 struct cpu cpus[NCPU];
+static struct cpu *bcpu;
+int ismp;
 int ncpu;
 uchar ioapicid;
+
+int
+mpbcpu(void)
+{
+  return bcpu-cpus;
+}
 
 static uchar
 sum(uchar *addr, int len)
