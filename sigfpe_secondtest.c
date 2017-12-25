@@ -5,9 +5,9 @@
 
 void signal_handler(int signum)
 {
-    __asm__("mov $0x0,%ecx\n\t");
+    __asm__ ("movl $0x0,%ecx\n\t");
         // Add my code to skip the return ip below
-    __asm__("addl $0x8, $0x18(%ebp)");
+    __asm__ ("addl $0x8, 0x18(%ebp)");
 }
 
 int main(void)
